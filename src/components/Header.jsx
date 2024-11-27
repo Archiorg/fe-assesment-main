@@ -1,18 +1,62 @@
-import React from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Icon } from '@mui/material';
-import CartIcon from "../assets/icons/cart.svg?react";
+import React, { useState, useEffect } from 'react';
+import { Box, Typography } from '@mui/material';
+import VerticalSeparator from './cmn/VerticalSeparator';
+import AddToCartSection from './cmn/AddToCartSection';
+import ShoppingCartWithCount from './cmn/ShoppingCartWithCount';
+import FavoriteIcon from '../assets/icons/favorite.svg';
+import FactSoft from '../assets/icons/facts-soft.svg';
+import CartIcon from '../assets/icons/cart.svg';
 
-const Header = () => (
-  <AppBar position="static">
-    <Toolbar>
-      <Typography variant="h6" style={{ flexGrow: 1 }}>
-        Product Page
+const Header = ({ title }) => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <Box
+      sx={{
+        boxShadow: isScrolled ? '0px 4px 10px rgba(0, 0, 0, 0.2)' : 'none',
+        position: 'sticky',
+        top: 0,
+        zIndex: 1000,
+        backgroundColor: '#ffffff',
+        borderBottom: '1px solid #ddd',
+        padding: '0.5rem 1rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        transition: 'all 0.3s ease',
+      }}
+    >
+      <Typography
+        variant='h6'
+        sx={{ 
+          fontWeight: '400', 
+          whiteSpace: 'nowrap', 
+          overflow: 'hidden', 
+          textOverflow: 'ellipsis', 
+          color: 'var(--primary-color)',
+        }}
+      >
+        {title}
       </Typography>
-      <IconButton color="inherit">
-        <CartIcon width="24" height="24" />
-      </IconButton>
-    </Toolbar>
-  </AppBar>
-);
+
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <AddToCartSection isVisible={isScrolled}/>
+        <Box component="img" src={FavoriteIcon} alt="Favorite" sx={{ width: '1.5rem', height: '1.5rem', cursor: 'pointer' }} />
+        <Box component="img" src={FactSoft} alt="Facts" sx={{ width: '1.5rem', height: '1.5rem', cursor: 'pointer' }} />
+        <VerticalSeparator />
+        <ShoppingCartWithCount count={5} iconSrc={CartIcon} />
+      </Box>
+    </Box>
+  );
+};
 
 export default Header;

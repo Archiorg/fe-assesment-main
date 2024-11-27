@@ -1,70 +1,58 @@
 import React from 'react';
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography, Divider } from '@mui/material';
 import Header from '../components/Header';
-import ProductImage from '../components/cmn/ProductImage';
-import Thumbnail from '../components/cmn/Thumbnail';
-import ButtonAddToCart from '../components/cmn/ButtonAddToCart';
-import StarRating from '../components/cmn/StarRating';
-import Description from '../components/Description';
-import DetailsAndPricing from '../components/DetailsAndPricing';
+import ProductImages from '../components/cmn/ProductImages';
+import ProductDetails from '../components/ProductDetails';
 import data from '../data/data.json';
 
-const ProductPage = () => (
-  <>
-    <Header />
-    <Box sx={{ padding: 4 }}>
+const ProductPage = () => {
+  const { article } = data;
+
+  return (
+    <Box sx={{ height: '100%' }}>
+      {/* Header Section */}
+      <Header title={article.title} price={article.price} />
+
       {/* Main Content */}
-      <Box
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: { xs: '1fr', md: '1fr 2fr' },
-          gap: 4,
-        }}
-      >
-        {/* Product Image Section */}
-        <Box>
-          <ProductImage src={data.article.images[0]} alt={data.article.title} />
-          <Box sx={{ display: 'flex', gap: 1, marginTop: 2 }}>
-            <Thumbnail src="/path/to/thumb1.jpg" alt="Thumbnail 1" />
-            <Thumbnail src="/path/to/thumb2.jpg" alt="Thumbnail 2" />
-          </Box>
+      <Box sx={{ padding: '2rem' }}>
+        {/* Main Product Section */}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', md: 'row' },
+            gap: '2rem',
+            marginBottom: '2rem',
+            alignItems: 'flex-start',
+          }}
+        >
+          <ProductImages images={article.images} />
+
+          <ProductDetails
+            title={article.title}
+            supplierName={article.supplier_name}
+            supplierLink={article.supplier_link}
+            price={article.price}
+            currency={article.currency}
+            transportCosts={article.transport_costs}
+            stars={article.stars}
+            vatPercent={article.vat_percent}
+          />
         </Box>
 
-        {/* Product Details Section */}
-        <Box>
-          <Typography variant="h4" gutterBottom>
-            {data.product.name}
-          </Typography>
-          <Typography variant="subtitle1" gutterBottom>
-            by {data.product.supplier}
-          </Typography>
-          <StarRating value={data.product.rating} />
-          <Typography variant="h6" sx={{ marginTop: 2, color: 'primary.main' }}>
-            {data.product.price} EUR
-          </Typography>
-          <Typography variant="body2">
-            + {data.product.shippingCost} EUR shipping
-          </Typography>
-          <Typography variant="caption" display="block" gutterBottom>
-            All prices incl. {data.product.taxes}% taxes
-          </Typography>
+        <Divider sx={{ marginY: '2rem' }} />
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, marginTop: 4 }}>
-            <AddToCartButton onClick={() => console.log('Added to cart')} />
-            <Button variant="outlined" color="secondary">
-              Save to Wishlist
-            </Button>
-          </Box>
+        {/* Description Section */}
+        <Box sx={{ alignItems: 'flex-start', textAlign: 'left' }}>
+          <Typography variant="h6" sx={{ marginBottom: '1rem', fontWeight: 'bold' }}>
+            Description
+          </Typography>
+          <Typography variant="body1" sx={{ color: '#666', lineHeight: 1.6 }}>
+            {article.description_long}
+          </Typography>
         </Box>
       </Box>
-
-      {/* Description Section */}
-      <Description description={data.description} />
-
-      {/* Details and Pricing Section */}
-      <DetailsAndPricing details={data.details} pricing={data.pricing} />
     </Box>
-  </>
-);
+  );
+};
 
 export default ProductPage;
