@@ -6,7 +6,8 @@ body {
 
 :root {
   --primary-color: #cc3507;
-  --secondary-color: grey;
+  --dark-grey: grey;
+  --light-grey: rgb(222, 219, 219);
 }
 
 .custom-star {

@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Badge } from '@mui/material';
 
 const ShoppingCartWithCount = ({ count, iconSrc }) => {
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    setIsAnimating(true);
+    const timeout = setTimeout(() => setIsAnimating(false), 300);
+    return () => clearTimeout(timeout);
+  }, [count]);
+
   return (
     <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-      {/* Badge for Count */}
       <Badge
         badgeContent={count}
-        color=""
         sx={{
           '& .MuiBadge-badge': {
             position: 'absolute',
@@ -18,7 +24,9 @@ const ShoppingCartWithCount = ({ count, iconSrc }) => {
             fontSize: '0.6rem',
             fontWeight: 'light',
             borderRadius: '50%',
-            border: '1px solid #fff'
+            border: '1px solid #fff',
+            transform: isAnimating ? 'scale(1.3)' : 'scale(1)',
+            transition: 'transform 0.3s ease',
           },
         }}
       />
@@ -26,12 +34,21 @@ const ShoppingCartWithCount = ({ count, iconSrc }) => {
       <Box
         component="img"
         src={iconSrc}
-        alt="Shopping Cart"
         sx={{
           width: '1.5rem',
           height: '1.5rem',
           cursor: 'pointer',
-          fill: 'palegreen'
+          animation: isAnimating
+            ? `bounce 0.3s ease` 
+            : 'none',
+          '@keyframes bounce': {
+            '0%, 100%': {
+              transform: 'translateY(0)',
+            },
+            '50%': {
+              transform: 'translateY(-10px)',
+            },
+          },
         }}
       />
     </Box>

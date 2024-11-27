@@ -6,9 +6,11 @@ import ShoppingCartWithCount from './cmn/ShoppingCartWithCount';
 import FavoriteIcon from '../assets/icons/favorite.svg';
 import FactSoft from '../assets/icons/facts-soft.svg';
 import CartIcon from '../assets/icons/cart.svg';
+import { useCart } from '../store/CartContext';
 
 const Header = ({ title }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const { cartCount, updateCartCount } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,12 +38,12 @@ const Header = ({ title }) => {
       }}
     >
       <Typography
-        variant='h6'
-        sx={{ 
-          fontWeight: '400', 
-          whiteSpace: 'nowrap', 
-          overflow: 'hidden', 
-          textOverflow: 'ellipsis', 
+        variant="h6"
+        sx={{
+          fontWeight: '400',
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
           color: 'var(--primary-color)',
         }}
       >
@@ -49,11 +51,11 @@ const Header = ({ title }) => {
       </Typography>
 
       <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <AddToCartSection isVisible={isScrolled}/>
-        <Box component="img" src={FavoriteIcon} alt="Favorite" sx={{ width: '1.5rem', height: '1.5rem', cursor: 'pointer' }} />
-        <Box component="img" src={FactSoft} alt="Facts" sx={{ width: '1.5rem', height: '1.5rem', cursor: 'pointer' }} />
+        <AddToCartSection isVisible={isScrolled} onAddToCart={updateCartCount} />
+        <Box component="img" src={FavoriteIcon} sx={{ width: '1.5rem', height: '1.5rem', cursor: 'pointer' }} />
+        <Box component="img" src={FactSoft} sx={{ width: '1.5rem', height: '1.5rem', cursor: 'pointer' }} />
         <VerticalSeparator />
-        <ShoppingCartWithCount count={5} iconSrc={CartIcon} />
+        <ShoppingCartWithCount count={cartCount} iconSrc={CartIcon} />
       </Box>
     </Box>
   );

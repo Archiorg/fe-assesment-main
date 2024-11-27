@@ -1,11 +1,11 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import fallbackImage from '../../assets/icons/package.svg'; // Import fallback image
-import zoomInIcon from '../../assets/icons/zoom-in.svg'; // Import zoom-in icon
+import fallbackImage from '../../assets/icons/package.svg';
+import zoomInIcon from '../../assets/icons/zoom-in.svg';
 
 const ProductImages = ({ images }) => {
   const handleImageError = (event) => {
-    event.target.src = fallbackImage; // Replace the image with the fallback image on error
+    event.target.src = fallbackImage;
   };
 
   return (
@@ -15,39 +15,38 @@ const ProductImages = ({ images }) => {
         flexDirection: 'row',
         gap: '1rem',
         alignItems: 'flex-start',
-      }}
-    >
-      {/* Left: Thumbnails */}
+      }}>
+        
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
           gap: '1rem',
-        }}
-      >
+        }}>
         {images.map((image, index) => (
           <Box
             key={index}
             sx={{
-              width: '80px',
-              height: '80px',
+              width: '5rem',
+              height: '5rem',
               border: '1px solid #ddd',
-            }}
-          >
+            }}>
             <Box
               component="img"
               src={image}
-              alt={`Thumbnail ${index + 1}`}
               onError={handleImageError}
               sx={{
                 transform: 'scale(0.5)',
+                WebkitTransform: 'scale(0.5)',
+                MozTransform: 'scale(0.5)', 
+                msTransform: 'scale(0.5)',
+                OTransform: 'scale(0.5)',
               }}
             />
           </Box>
         ))}
       </Box>
 
-      {/* Right: Main Image with Zoom Icon */}
       <Box
         sx={{
           position: 'relative',
@@ -59,31 +58,32 @@ const ProductImages = ({ images }) => {
           justifyContent: 'center',
         }}
       >
-        {/* Main Image */}
         <Box
           component="img"
-          src={images[0]} // should be selected
-          alt="Main Product Image"
+          src={images[0]} // should be selected instead
           onError={handleImageError}
           sx={{
             width: '100%',
             height: '100%',
-            objectFit: 'scale-down',
+            transform: 'scale(0.4)',
+            WebkitTransform: 'scale(0.4)',
+            MozTransform: 'scale(0.4)', 
+            msTransform: 'scale(0.4)',
+            OTransform: 'scale(0.4)',
           }}
         />
 
         <Box
           component="img"
           src={zoomInIcon}
-          alt="Zoom-In Icon"
           sx={{
             position: 'absolute',
             bottom: '0px',
             right: '0px',
-            width: '40px', 
-            height: '40px',
+            width: '3rem', 
+            height: '3rem',
             zIndex: 10,
-            transform: 'scale(0.6)'
+            transform: 'scale(0.5)'
           }}
         />
       </Box>

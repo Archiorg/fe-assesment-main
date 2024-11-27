@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
 
-const AddToCartSection = ({ isVisible }) => {
+const AddToCartSection = ({ isVisible, onAddToCart }) => {
   if (!isVisible) return null;
 
   return (
@@ -10,8 +10,7 @@ const AddToCartSection = ({ isVisible }) => {
         display: 'flex',
         alignItems: 'center',
         gap: '1rem',
-      }}
-    >
+      }}>
       <TextField
         type="number"
         defaultValue={1}
@@ -29,6 +28,7 @@ const AddToCartSection = ({ isVisible }) => {
       <Button
         variant="text"
         size="medium"
+        onClick={onAddToCart}
         sx={{
           backgroundColor: 'var(--primary-color)',
           color: '#fff',
@@ -38,8 +38,7 @@ const AddToCartSection = ({ isVisible }) => {
           '&:hover': {
             backgroundColor: '#e68900',
           },
-        }}
-      >
+        }}>
         + Add to Cart
       </Button>
     </Box>

@@ -13,14 +13,12 @@ const CustomRating = ({ value }) => {
       icon={
         <img
           src={starFilled}
-          alt="Full Star"
           className="custom-star"
         />
       }
       emptyIcon={
         <img
           src={starEmpty}
-          alt="Empty Star"
           className="custom-star"
         />
       }
